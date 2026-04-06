@@ -19,6 +19,20 @@ export const navigationData: AppConfig = {
           url: 'https://rsec.top/audio-player',
           description: { cn: '用于本地录屏的音频可视化播放器', en: 'Audio Visualizer for Local Screen Recordings' },
           iconName: 'AudioWaveform'
+        },
+        {
+          id: 'ICOGenerator',
+          title: { cn: 'ICO生成器', en: 'ICO Generator' },
+          url: 'https://rsec.top/ico-generator',
+          description: { cn: '可以裁剪局部图像以生成指定分辨率 ICO 的 ICO 生成器。', en: 'An ICO generator that can crop local images to generate ICOs of a specified resolution.' },
+          iconName: 'FileCog'
+        },
+        {
+          id: 'SimplePomodoroTimer',
+          title: { cn: '简易番茄钟', en: 'Simple Pomodoro Timer' },
+          url: 'https://rsec.top/timer',
+          description: { cn: '一个简单的番茄钟计时器，允许您自定义回合数、间隔时间和每回合的持续时间。', en: 'A simple Pomodoro timer that allows you to customize the number of rounds, intervals, and duration of each round.' },
+          iconName: 'AlarmClock'
         }
       ]
     }
