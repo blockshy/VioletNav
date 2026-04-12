@@ -1,5 +1,30 @@
 import { AppConfig } from './types';
 
+function resolveDomain(kind: 'fluxfiles' | 'lyrics' | 'player' | 'ico' | 'timer' | 'nav') {
+  const host = typeof window !== 'undefined' ? window.location.hostname : '';
+  const isDev = host === 'dev.nav.rsec.top' || host === 'test.rsec.top' || host.startsWith('dev.');
+
+  const mapping = isDev
+    ? {
+        fluxfiles: 'https://dev.files.rsec.top/',
+        lyrics: 'https://dev.lyrics.rsec.top/',
+        player: 'https://dev.player.rsec.top/',
+        ico: 'https://dev.ico.rsec.top/',
+        timer: 'https://dev.timer.rsec.top/',
+        nav: 'https://dev.nav.rsec.top/',
+      }
+    : {
+        fluxfiles: 'https://files.rsec.top/',
+        lyrics: 'https://lyrics.rsec.top/',
+        player: 'https://player.rsec.top/',
+        ico: 'https://ico.rsec.top/',
+        timer: 'https://timer.rsec.top/',
+        nav: 'https://nav.rsec.top/',
+      };
+
+  return mapping[kind];
+}
+
 export const navigationData: AppConfig = {
   categories: [
     {
@@ -9,7 +34,7 @@ export const navigationData: AppConfig = {
         {
           id: 'LyricTools',
           title: { cn: '歌词工具', en: 'LyricTools' },
-          url: 'https://rsec.top/lyric-tools',
+          url: resolveDomain('lyrics'),
           description: {
             cn: '支持 QQ 音乐本地 QRC 文件在线解密及歌词合并导出',
             en: 'Supports online decryption of local QRC lyric files from QQ Music and merged export of lyrics',
@@ -19,7 +44,7 @@ export const navigationData: AppConfig = {
         {
           id: 'AudioPlayer',
           title: { cn: '音频可视化播放器', en: 'Audio Visualizer' },
-          url: 'https://rsec.top/audio-player',
+          url: resolveDomain('player'),
           description: {
             cn: '用于本地录屏的音频可视化播放器',
             en: 'Audio Visualizer for Local Screen Recordings',
@@ -29,7 +54,7 @@ export const navigationData: AppConfig = {
         {
           id: 'ICOGenerator',
           title: { cn: 'ICO 生成器', en: 'ICO Generator' },
-          url: 'https://rsec.top/ico-generator',
+          url: resolveDomain('ico'),
           description: {
             cn: '可以裁剪局部图像以生成指定分辨率 ICO 的 ICO 生成器。',
             en: 'An ICO generator that can crop local images to generate ICOs of a specified resolution.',
@@ -39,7 +64,7 @@ export const navigationData: AppConfig = {
         {
           id: 'SimplePomodoroTimer',
           title: { cn: '简易番茄钟', en: 'Simple Pomodoro Timer' },
-          url: 'https://rsec.top/timer',
+          url: resolveDomain('timer'),
           description: {
             cn: '一个简单的番茄钟计时器，允许您自定义回合数、间隔时间和每回合的持续时间。',
             en: 'A simple Pomodoro timer that allows you to customize the number of rounds, intervals, and duration of each round.',
@@ -55,7 +80,7 @@ export const navigationData: AppConfig = {
         {
           id: 'FluxFiles',
           title: { cn: 'FluxFiles', en: 'FluxFiles' },
-          url: 'https://rsec.top/fluxfiles/',
+          url: resolveDomain('fluxfiles'),
           description: {
             cn: '面向公开用户的文件查询与下载平台，支持管理员后台上传与维护。',
             en: 'A public file distribution platform with searchable downloads and an admin console for upload and management.',
