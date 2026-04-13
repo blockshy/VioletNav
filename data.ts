@@ -2,24 +2,24 @@ import { AppConfig } from './types';
 
 function resolveDomain(kind: 'fluxfiles' | 'lyrics' | 'player' | 'ico' | 'timer' | 'nav') {
   const host = typeof window !== 'undefined' ? window.location.hostname : '';
-  const isDev = host === 'dev.nav.rsec.top' || host.startsWith('dev.');
+  const isDev = host === 'dev.nav.tyukki.com' || host.startsWith('dev.');
 
   const mapping = isDev
     ? {
-        fluxfiles: 'https://dev.files.rsec.top/',
-        lyrics: 'https://dev.lyrics.rsec.top/',
-        player: 'https://dev.player.rsec.top/',
-        ico: 'https://dev.ico.rsec.top/',
-        timer: 'https://dev.timer.rsec.top/',
-        nav: 'https://dev.nav.rsec.top/',
+        fluxfiles: 'https://dev.files.tyukki.com/',
+        lyrics: 'https://dev.lyrics.tyukki.com/',
+        player: 'https://dev.player.tyukki.com/',
+        ico: 'https://dev.ico.tyukki.com/',
+        timer: 'https://dev.timer.tyukki.com/',
+        nav: 'https://dev.nav.tyukki.com/',
       }
     : {
-        fluxfiles: 'https://files.rsec.top/',
-        lyrics: 'https://lyrics.rsec.top/',
-        player: 'https://player.rsec.top/',
-        ico: 'https://ico.rsec.top/',
-        timer: 'https://timer.rsec.top/',
-        nav: 'https://nav.rsec.top/',
+        fluxfiles: 'https://files.tyukki.com/',
+        lyrics: 'https://lyrics.tyukki.com/',
+        player: 'https://player.tyukki.com/',
+        ico: 'https://ico.tyukki.com/',
+        timer: 'https://timer.tyukki.com/',
+        nav: 'https://nav.tyukki.com/',
       };
 
   return mapping[kind];
