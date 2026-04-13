@@ -2,7 +2,7 @@ import { AppConfig } from './types';
 
 function resolveDomain(kind: 'fluxfiles' | 'lyrics' | 'player' | 'ico' | 'timer' | 'nav') {
   const host = typeof window !== 'undefined' ? window.location.hostname : '';
-  const isDev = host === 'dev.nav.rsec.top' || host === 'test.rsec.top' || host.startsWith('dev.');
+  const isDev = host === 'dev.nav.rsec.top' || host.startsWith('dev.');
 
   const mapping = isDev
     ? {
