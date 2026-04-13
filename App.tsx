@@ -36,6 +36,33 @@ const App: React.FC = () => {
     }
   }, [darkMode]);
 
+  useEffect(() => {
+    const canonicalHref = `${window.location.origin}/`;
+    let canonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalHref;
+
+    let description = document.head.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (!description) {
+      description = document.createElement('meta');
+      description.name = 'description';
+      document.head.appendChild(description);
+    }
+    description.content = 'VioletNav 导航页，集中整理 FluxFiles、歌词工具、音频播放器、ICO 生成器与番茄钟等实用网站入口。';
+
+    let robots = document.head.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.name = 'robots';
+      document.head.appendChild(robots);
+    }
+    robots.content = 'index,follow';
+  }, []);
+
   // Persist favorites to localStorage
   useEffect(() => {
     localStorage.setItem('violet-nav-favorites', JSON.stringify(favorites));
