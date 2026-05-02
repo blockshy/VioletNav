@@ -2,18 +2,22 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ExternalLink, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import { LinkItem, Language } from '../types';
 import { Icon } from './Icon';
+import type { ThemeMode } from '../services/preferences';
+import { toolEntryUrl } from '../services/toolLinks';
 
 interface LinkCardProps {
   item: LinkItem;
   lang: Language;
+  theme: ThemeMode;
   isFavorite: boolean;
   onToggleFavorite: () => void;
 }
 
-export const LinkCard: React.FC<LinkCardProps> = ({ item, lang, isFavorite, onToggleFavorite }) => {
+export const LinkCard: React.FC<LinkCardProps> = ({ item, lang, theme, isFavorite, onToggleFavorite }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showExpandButton, setShowExpandButton] = useState(false);
   const descRef = useRef<HTMLParagraphElement>(null);
+  const href = toolEntryUrl(item.url, theme, lang);
 
   useEffect(() => {
     const checkOverflow = () => {
@@ -43,50 +47,48 @@ export const LinkCard: React.FC<LinkCardProps> = ({ item, lang, isFavorite, onTo
 
   return (
     <a
-      href={item.url}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex flex-col p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700/50 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out overflow-hidden h-full"
+      className="nav-link-card group relative flex flex-col p-4 rounded-lg transition-all duration-300 ease-out overflow-hidden h-full"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-violet-500/0 via-violet-500/0 to-violet-500/0 group-hover:from-violet-500/5 group-hover:via-fuchsia-500/5 group-hover:to-purple-500/5 transition-all duration-300" />
-      
       <div className="flex items-start justify-between mb-3 relative z-10 flex-shrink-0">
-        <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-gray-700/50 text-violet-600 dark:text-violet-400 group-hover:bg-violet-50 dark:group-hover:bg-violet-900/20 group-hover:text-violet-600 dark:group-hover:text-violet-300 transition-colors duration-300">
+        <div className="nav-link-icon p-2.5 rounded-lg transition-colors duration-300">
           <Icon name={item.iconName} size={22} />
         </div>
         
         <div className="flex items-center gap-2">
-           {/* Favorite Button */}
            <button
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               onToggleFavorite();
             }}
-            className={`p-1.5 rounded-md transition-all duration-200 ${
-              isFavorite 
-                ? 'text-yellow-400 hover:text-yellow-500 bg-yellow-400/10' 
-                : 'text-gray-300 hover:text-yellow-400 hover:bg-yellow-400/10 dark:text-gray-600'
+            className={`nav-favorite-button p-1.5 rounded-md transition-all duration-200 ${
+              isFavorite
+                ? 'is-active'
+                : ''
             }`}
-            title={isFavorite ? '取消收藏' : '收藏'}
+            title={isFavorite ? (lang === 'cn' ? '取消收藏' : 'Remove favorite') : (lang === 'cn' ? '收藏' : 'Favorite')}
+            aria-label={isFavorite ? (lang === 'cn' ? '取消收藏' : 'Remove favorite') : (lang === 'cn' ? '收藏' : 'Favorite')}
           >
             <Star 
               className={`w-4 h-4 transition-transform duration-200 ${isFavorite ? 'fill-current scale-110' : 'scale-100'}`} 
             />
           </button>
           
-          <ExternalLink className="w-4 h-4 text-gray-300 group-hover:text-violet-400 dark:text-gray-600 dark:group-hover:text-violet-500 transition-colors duration-200 opacity-0 group-hover:opacity-100" />
+          <ExternalLink className="nav-external-icon w-4 h-4 transition-colors duration-200 opacity-0 group-hover:opacity-100" />
         </div>
       </div>
 
       <div className="relative z-10 flex flex-col flex-grow">
-        <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors flex-shrink-0">
+        <h3 className="nav-link-title text-base font-semibold mb-1 transition-colors flex-shrink-0">
           {item.title[lang]}
         </h3>
         <div className="relative flex-grow flex flex-col">
           <p 
             ref={descRef}
-            className={`text-sm text-gray-500 dark:text-gray-400 transition-all duration-300 ${
+            className={`nav-link-description text-sm transition-all duration-300 ${
               isExpanded ? '' : 'line-clamp-2'
             }`}
             style={{ minHeight: isExpanded ? 'auto' : '2.5em' }}
@@ -94,12 +96,11 @@ export const LinkCard: React.FC<LinkCardProps> = ({ item, lang, isFavorite, onTo
             {item.description ? item.description[lang] : ''}
           </p>
           
-          {/* Expand Toggle Button */}
           {(showExpandButton || isExpanded) && (
             <div className="flex justify-start mt-2 pt-1">
               <button
                 onClick={handleToggleExpand}
-                className="flex items-center gap-1 text-xs font-medium text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded-md hover:bg-violet-100 dark:hover:bg-violet-900/50"
+                className="nav-expand-button flex items-center gap-1 text-xs font-medium transition-colors px-2 py-1 rounded-md"
               >
                 {isExpanded ? (
                    <>
